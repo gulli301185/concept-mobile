@@ -40,30 +40,33 @@ const ModalDropTo = ({ isOpenTo, setIsOpenTo, data }) => {
           style={{ "--padding-start": "16px" }}
         ></IonInput>
         <IonList>
-          {data?.slice(0, 20)?.map((el) => {
-            return (
-              <IonItem
-                key={el.id}
-                button
-                onClick={() => {
-                  setTo(el); // ⬅️ zustand'ка сакталды
-                  setIsOpenTo(false); // ⬅️ modal жабылат
-                }}
-              >
-                <IonLabel>
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p>{el.city}</p>
-                      <p className="text-gray-400">
-                        {el.city}, {el.country}
-                      </p>
+          {[...(data || [])]
+            ?.filter((elem) => elem.is_popular && elem.position > 0)
+            .sort((a, b) => a.position - b.position)
+            .map((el) => {
+              return (
+                <IonItem
+                  key={el.id}
+                  button
+                  onClick={() => {
+                    setTo(el); // ⬅️ zustand'ка сакталды
+                    setIsOpenTo(false); // ⬅️ modal жабылат
+                  }}
+                >
+                  <IonLabel>
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <p>{el.city}</p>
+                        <p className="text-gray-400">
+                          {el.city}, {el.country}
+                        </p>
+                      </div>
+                      <div>{el.city_code}</div>
                     </div>
-                    <div>{el.city_code}</div>
-                  </div>
-                </IonLabel>
-              </IonItem>
-            );
-          })}
+                  </IonLabel>
+                </IonItem>
+              );
+            })}
         </IonList>
       </IonContent>
     </IonModal>

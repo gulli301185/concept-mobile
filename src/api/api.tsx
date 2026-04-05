@@ -1,6 +1,21 @@
 export const API = {
+  loginGoogle: "api/googleauth/login/",
   popularDestination: "api/avia/popular-destination",
-  serchTickets:"api/avia/search-flights/",
-  ticketsChart:"api/avia/tickets-chart",
-  getOffers:"api/avia/get-offers/"
+  serchTickets: "api/avia/search-flights/",
+  ticketsChart: "api/avia/tickets-chart",
+  getOffers: "api/avia/get-offers/",
+  getSmartOffers: "api/avia/get-smart-offers/",
+  register: "api/user/register",
+  login: "api/user/login",
+  forgetPassword: "api/user/re-send/email",
+  confirmCode: "api/user/confirm-code",
+  newPassword: "api/user/set-new-password",
+  personalInfo: "api/user/personal-info",
+  citizenShip: "api/avia/cittezenship/",
+  docType:"api/avia/doc-type",
+  docInfo:"api/user/doc-info",
+  docInfoUser:"api/user/doc-info",
+  profileInfo:"api/user/profile-info",
+  logout:"api/user/user/logout/",
+  deleteAccount:"api/user/user/delete-account/"
 };

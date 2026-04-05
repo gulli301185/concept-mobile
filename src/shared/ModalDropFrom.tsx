@@ -9,6 +9,7 @@ import {
 } from "@ionic/react";
 import close from "../components/main/main-img/􀅾.svg";
 import { useFromCountry } from "../store/useFromCounty";
+
 const ModalDropFrom = ({ isOpenFrom, setIsOpenFrom, data }) => {
   const { setFrom } = useFromCountry();
   return (
@@ -36,8 +37,10 @@ const ModalDropFrom = ({ isOpenFrom, setIsOpenFrom, data }) => {
           style={{ "--padding-start": "16px" }}
         ></IonInput>
         <IonList>
-          {data?.slice(0, 20)?.map((el) => {
-            return (
+          {[...(data || [])]
+            .filter((el) => el.is_popular === true && el.position>0)
+            .sort((a, b) => Number(a.position) - Number(b.position))
+            .map((el) => (
               <IonItem
                 key={el.id}
                 button
@@ -58,8 +61,7 @@ const ModalDropFrom = ({ isOpenFrom, setIsOpenFrom, data }) => {
                   </div>
                 </IonLabel>
               </IonItem>
-            );
-          })}
+            ))}
         </IonList>
       </IonContent>
     </IonModal>

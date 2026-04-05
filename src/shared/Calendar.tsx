@@ -1,7 +1,7 @@
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
 
-import React, { useState } from "react";
+import React from "react";
 import {
   IonButton,
   IonFooter,
@@ -11,7 +11,6 @@ import {
 } from "@ionic/react";
 import close from "../components/main/main-img/􀅾.svg";
 import { useDateStore } from "../store/useDateStore";
-import { useLocation } from "react-router";
 
 const Calendar = ({ isOpenCalendar, setIsOpenCalendar }) => {
   const { departDate, returnDate, setDepartDate, setReturnDate } =
@@ -21,7 +20,8 @@ const Calendar = ({ isOpenCalendar, setIsOpenCalendar }) => {
     <IonModal
       isOpen={isOpenCalendar}
       initialBreakpoint={1}
-      breakpoints={[0, 1, 1]}
+      breakpoints={[0, 0.8, 1]}
+      className="rounded-t-3xl"
     >
       <div className="w-[90%] m-auto pb-5">
         <div className="flex justify-end gap-20 items-center mb-6">
@@ -56,6 +56,7 @@ const Calendar = ({ isOpenCalendar, setIsOpenCalendar }) => {
       <div className="overflow-y-auto max-h-[60vh]">
         <DayPicker
           className={"rdp-vertical"}
+          disabled={{ before: new Date() }}
           styles={{
             months: { display: "flex", justifyContent: "center" },
           }}
@@ -89,16 +90,14 @@ const Calendar = ({ isOpenCalendar, setIsOpenCalendar }) => {
           }}
         />
       </div>
-      <IonFooter className="h-24">
-        <IonToolbar>
-          <IonButton
-            expand="block"
-            style={{ "--background": "#06A7F2" }}
-            className="w-[90%] m-auto"
+      <IonFooter className="p-5">
+        <IonToolbar >
+          <button
+            className="bg-[#06A7F2] py-3  text-white rounded-2xl  w-full "
             onClick={() => setIsOpenCalendar(false)}
           >
             Обратный билет не нужен
-          </IonButton>
+          </button>
         </IonToolbar>
       </IonFooter>
     </IonModal>

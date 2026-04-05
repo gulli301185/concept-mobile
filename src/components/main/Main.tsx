@@ -39,8 +39,7 @@ const Main = () => {
   const [isOpenCalendar, setIsOpenCalendar] = useState(false);
   const router = useIonRouter();
   const { passengers, cabinClass } = usePassengerStore();
-  const { departDate, returnDate } =
-    useDateStore();
+  const { departDate, returnDate } = useDateStore();
   console.log(returnDate);
 
   const { from, to } = useFromCountry();
@@ -74,7 +73,7 @@ const Main = () => {
     onSuccess: (data) => {
       console.log("SUCCESS:", data);
       router.push(
-        `/search?request_id=${data?.data?.request_id}`,
+        `/app/search?request_id=${data?.data?.request_id}`,
         "forward",
         "push",
       );
@@ -104,7 +103,7 @@ const Main = () => {
 
   return (
     <div>
-      <Banner />
+      <Banner from={from?.city} to={to?.city} />
       <div className=" w-[90%] left-1/2 transform -translate-x-1/2  absolute -mt-14 z-50 flex flex-col gap-2 ">
         <div className="relative">
           <div onClick={() => setIsOpenFrom(!isOpenFrom)}>
@@ -121,8 +120,16 @@ const Main = () => {
           </div>
           <IonFab className="absolute bottom-5 right-3 ">
             <IonFabButton size="small" className="">
-              <IonIcon size="small" className="-m-4" icon={arrowDown}></IonIcon>
-              <IonIcon size="small" className="-m-4" icon={arrowUp}></IonIcon>
+              <IonIcon
+                size="small"
+                className="-m-4 text-gray-600 font-bold"
+                icon={arrowDown}
+              ></IonIcon>
+              <IonIcon
+                size="small"
+                className="-m-4 text-gray-600 font-bold"
+                icon={arrowUp}
+              ></IonIcon>
             </IonFabButton>
           </IonFab>
           <div onClick={() => setIsOpenTo(!isOpenTo)}>
@@ -152,7 +159,7 @@ const Main = () => {
               placeholder="Дата туда"
               readOnly
               value={formatDate(departDate)}
-              className="w-full pl-12 py-3.5 outline-none rounded-l-xl"
+              className="w-full pl-12 py-3.5 outline-none rounded-l-2xl"
             />
           </div>
           <div className="border border-gray-300"></div>
@@ -162,7 +169,7 @@ const Main = () => {
               placeholder="Дата обратно"
               readOnly
               value={formatDate(returnDate)}
-              className="w-full pl-2 py-3.5 focus:border-blue-500 outline-none rounded-r-xl"
+              className="w-full pl-2 py-3.5 focus:border-blue-500 outline-none rounded-r-2xl"
             />
           </div>
         </div>
@@ -175,7 +182,7 @@ const Main = () => {
         <IonItem
           button
           onClick={() => setIsOpenToPassenger(true)}
-          className="rounded-xl"
+          className="rounded-2xl"
         >
           <IonIcon
             icon={person}
@@ -210,14 +217,13 @@ const Main = () => {
             data={data}
           />
         )}
-        <IonButton
-          style={{ "--background": "#06A7F2" }}
-          className="h-[50px] "
+        <button
+          className="bg-[#06A7F2] py-3 text-white rounded-2xl mt-3"
           // disabled={!from || !to || !departDate}
           onClick={() => mutate(payload)}
         >
           {isPending ? "Поиск..." : "Найти"}
-        </IonButton>
+        </button>
       </div>
     </div>
   );

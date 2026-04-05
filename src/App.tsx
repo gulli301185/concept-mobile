@@ -31,17 +31,19 @@ import "@ionic/react/css/palettes/dark.system.css";
 
 /* Theme variables */
 import "./theme/variables.css";
-import SearchPage from "./pages/search/SearchPage";
 import DetailTicket from "./pages/detail-ticket/DetailTicket";
 import Passenger from "./pages/passenger/Passenger";
 import Login from "./pages/register/Login";
 import Register from "./pages/register/Register";
 import Code from "./pages/code/Code";
-import ConfirmCode from "./pages/code/ConfirmCode";
+// import ConfirmCode from "./pages/code/ConfirmCode";
 import ForgotPassword from "./pages/code/ForgotPassword";
 import NewPassword from "./pages/code/NewPassword";
 import AppPage from "./pages";
-
+import FaqList from "./pages/faq/FaqList";
+import FaqDetail from "./pages/faq/FaqDetail";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 setupIonicReact();
 
 const App: React.FC = () => (
@@ -51,11 +53,12 @@ const App: React.FC = () => (
         <Route path="/app">
           <AppPage />
         </Route>
-
-        <Route exact path="/search">
-          <SearchPage />
+        <Route exact path="/faq">
+          <FaqList />
         </Route>
-
+        <Route exact path="/faq/:id">
+          <FaqDetail />
+        </Route>
         <Route exact path="/detail-ticket">
           <DetailTicket />
         </Route>
@@ -72,10 +75,10 @@ const App: React.FC = () => (
         <Route path="/code">
           <Code />
         </Route>
-        <Route path="/confirm-code">
-          ~
+
+        {/* <Route path="/confirm-code">
           <ConfirmCode />
-        </Route>
+        </Route> */}
         <Route path="/forgot-password">
           <ForgotPassword />
         </Route>
@@ -87,6 +90,7 @@ const App: React.FC = () => (
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>
+    <ToastContainer />
   </IonApp>
 );
 

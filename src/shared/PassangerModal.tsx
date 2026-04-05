@@ -95,30 +95,32 @@ const PassangerModal = ({ isOpenPassenger, setIsOpenToPassenger }) => {
       breakpoints={[0, 0.8, 1]}
       style={{ "--background": "#F0F0F5" }}
     >
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 mx-5">
         <p className="text-xl font-bold text-center mt-5">Пассажиры</p>
 
-        <div className="p-4 space-y-5 bg-white m-5 rounded-xl">
+        <div className="p-4 space-y-5 bg-white  rounded-xl">
           {passengerList.map(({ key, label, age, count }) => (
             <div key={key} className="flex justify-between items-center">
               <div>
                 <p className="font-medium">{label}</p>
-                <span className="text-sm text-gray-400">{age}</span>
+                <span className="text-sm text-gray-400 font-bold">{age}</span>
               </div>
 
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => decrement(key)}
-                  className="w-8 h-8 border rounded-lg bg-slate-100"
+                  className="w-8 h-8 border rounded-lg text-center bg-slate-100 text-gray-400 font-bold"
                 >
                   -
                 </button>
 
-                <span className="w-8 text-center">{count}</span>
+                <span className="w-8 text-center text-gray-400 font-bold">
+                  {count}
+                </span>
 
                 <button
                   onClick={() => increment(key)}
-                  className="w-8 h-8 rounded-lg bg-slate-300"
+                  className="w-8 h-8 rounded-lg bg-slate-300 text-gray-500 font-bold flex justify-center items-center"
                 >
                   +
                 </button>
@@ -127,14 +129,14 @@ const PassangerModal = ({ isOpenPassenger, setIsOpenToPassenger }) => {
           ))}
         </div>
 
-        <div className="flex gap-3 mx-5">
+        <div className="flex gap-3 overflow-x-auto whitespace-nowrap no-scrollbar">
           {classes?.map((cls) => (
             <div
               key={cls.id}
               onClick={() => setCabinClass(cls)}
-              className={`px-5 py-3 rounded-lg cursor-pointer ${
+              className={`px-5 py-3 rounded-lg cursor-pointer flex-shrink-0 ${
                 cabinClass.value === cls.value
-                  ? "bg-blue-500 text-white"
+                  ? "border-[#06A7F2] border-2 bg-white"
                   : "bg-white"
               }`}
             >
@@ -143,14 +145,12 @@ const PassangerModal = ({ isOpenPassenger, setIsOpenToPassenger }) => {
           ))}
         </div>
 
-        <IonButton
-          expand="block"
+        <button
           onClick={() => setIsOpenToPassenger(false)}
-          className="mb-20 mx-5"
-          style={{ "--background": "#06A7F2" }}
+          className="bg-[#06A7F2] py-3 text-white rounded-2xl mt-3"
         >
           Готово
-        </IonButton>
+        </button>
       </div>
     </IonModal>
   );

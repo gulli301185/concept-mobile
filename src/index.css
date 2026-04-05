@@ -5,7 +5,9 @@
 ion-fab-button::part(native) {
   background-color: transparent;
   border-radius: 15px;
-  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+  box-shadow:
+    0px 1px 2px 0px rgba(0, 0, 0, 0.3),
+    0px 1px 3px 1px rgba(0, 0, 0, 0.15);
   color: black;
 }
 
@@ -23,9 +25,40 @@ ion-fab-button::part(native):active::after {
 }
 
 ion-modal.half-sheet::part(content) {
-  height: 80vh;       /* экрандын жарымы */
+  height: 80vh; /* экрандын жарымы */
   position: absolute;
   bottom: 0;
   border-radius: 20px 20px 0 0;
 }
 
+ion-tab-button.tab-selected {
+  color: #00aaff; /* актив түс */
+}
+
+ion-tab-button.tab-selected ion-icon,
+ion-tab-button.tab-selected ion-label {
+  color: #00aaff;
+}
+
+.half-sheet {
+  --height: 70%;
+}
+
+.big-label::part(label) {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.nsm7Bb-HzV7m-LgbsSe-MJoBVe {
+  background-color: #f0f0f5;
+  font-weight: bold;
+}

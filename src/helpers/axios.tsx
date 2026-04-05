@@ -1,4 +1,3 @@
-
 import axios from "axios";
 import { API } from "../api/api";
 
@@ -7,14 +6,10 @@ const axiosInstance = axios.create({
 });
 
 export const AUTH_REQUIRED_PATHS = [
-  API.logout,
-  API.loginSave,
-  API.deleteAccount,
-  API.changePassword,
-  API.personalInfo,
-  API.aviaOrdersDetail,
-  API.aviaOrders,
-  API.orders,
+  API.login,
+  API.newPassword,
+  API.docInfo,
+  API.ticketsChart,
 ];
 
 axiosInstance.interceptors.request.use(
@@ -27,12 +22,12 @@ axiosInstance.interceptors.request.use(
     };
 
     if (token) {
-      config.headers["Authorization"] =` Token ${token}`;
+      config.headers["Authorization"] = `Token ${token}`;
     }
 
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 axiosInstance.interceptors.response.use(
@@ -44,7 +39,7 @@ axiosInstance.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 export default axiosInstance;

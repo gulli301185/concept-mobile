@@ -47,9 +47,10 @@ const SearchPage = () => {
 
   const searchParams = new URLSearchParams(router.routeInfo.search);
   const requestId = searchParams.get("request_id");
+  console.log(searchParams);
 
   const detailTicketHandler = (params: { segment: any; group: any }) => {
-     const { segment, group } = params;
+    const { segment, group } = params;
     router.push(
       {
         pathname: "/detail-ticket",
@@ -71,7 +72,6 @@ const SearchPage = () => {
 
   const { data: offers } = useQuery({
     queryKey: ["offers", requestId],
-
     queryFn: async () => {
       if (!requestId) return null;
 
@@ -101,18 +101,11 @@ const SearchPage = () => {
   console.log(offers);
 
   return (
-    <IonPage style={{ "--background": "#F0F0F5", "--borderRadius": "20px" }}>
+    <IonPage>
       <CustomToolbar>
-        <IonHeader className="pt-20">
-          <IonToolbar
-            style={{
-              "--background": "#ffffff",
-              "--border-width": "0",
-            }}
-            className="my-5 "
-          >
-            <div className="flex items-center flex-col gap-3  py-2">
-              {/* Back */}
+        <IonHeader className="shadow-none rounded-2xl">
+          <IonToolbar className="my-5">
+            <div className="flex items-center flex-col gap-3">
               <div className="flex justify-between  w-[90%]">
                 <IonButtons slot="start">
                   <IonButton onClick={goBack}>
@@ -160,8 +153,14 @@ const SearchPage = () => {
       <IonContent style={{ "--background": "#F0F0F5" }}>
         {offers?.offers?.map((group, i) =>
           group?.offers?.map((offer, j) => {
-            const segment = offer?.segments?.[0];
+            const segment = offer?.segments?.find(
+              (elem) => elem.dir_number === 1,
+            );
             if (!segment) return null;
+            const obratno = offer?.segments?.find((el) => el?.dir_number === 2);
+            // if(!obratno) return
+            console.log(obratno);
+            console.log(offer);
 
             return (
               <IonCard
@@ -194,138 +193,210 @@ const SearchPage = () => {
                     </IonLabel>
                   </div>
 
-                  <div className="flex justify-between py-5 items-start">
-                    <IonImg src={group?.carrier_logo} className="w-10 h-10" />
+                  {segment?.flights_info?.length > 1 ? (
+                    <div className=" flex flex-col gap-5">
+                      {segment.flights_info.map((flight, index) => (
+                        <div
+                          key={index}
+                          className="grid grid-cols-2 mt-2 gap-5"
+                        >
+                          <div className="flex gap-3">
+                            <IonImg
+                              src={group?.carrier_logo}
+                              className="w-5 h-5 object-contain mt-1"
+                            />
 
-                    <div>
-                      <p className="font-semibold">
-                        {segment.departure_time} – {segment.arrival_time}
-                      </p>
-                      <div className="flex gap-1 items-center">
-                        <p>{segment.departure_airport}</p>
-                        <IonIcon icon={arrowForward} />
-                        <p>{segment.arrival_airport}</p>
+                            <div className="text-center">
+                              <p className="font-semibold text-[18px] leading-none">
+                                {flight?.departure_local_time}
+                              </p>
+                              <p className=" text-[#7B8190]">
+                                ({flight?.departure_airport})
+                              </p>
+                              <p className="text-[#7B8190]">
+                                {flight?.departure_city || ""}
+                              </p>
+                            </div>
+
+                            <div className="text-center text-[18px] mt-1">
+                              <IonIcon icon={arrowForward} />
+                            </div>
+
+                            <div className="text-center">
+                              <p className="font-semibold text-[18px] ">
+                                {flight?.arrival_local_time}
+                              </p>
+
+                              <p className=" text-[#7B8190]">
+                                ({flight?.arrival_airport})
+                              </p>
+
+                              <p className=" text-[#7B8190]">
+                                {flight?.arrival_city || ""}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="text-[12px] text-[#B6BBC6]">
+                            <p>{flight?.duration_formated}/в пути</p>
+
+                            <p>{segment?.flights_info?.length - 1} пересадок</p>
+                          </div>
+                        </div>
+                      ))}
+                      <div>
+                        {obratno && obratno?.flights_info?.length > 1 ? (
+                          <div className=" flex flex-col gap-5">
+                            <p className="text-[#00AAFF]">Обратно</p>
+                            {obratno?.flights_info.map((flight, index) => (
+                              <div
+                                key={index}
+                                className="grid grid-cols-2 mt-2 gap-5"
+                              >
+                                <div className="flex gap-3">
+                                  <IonImg
+                                    src={group?.carrier_logo}
+                                    className="w-5 h-5 object-contain mt-1"
+                                  />
+
+                                  <div className="text-center">
+                                    <p className="font-semibold text-[18px] leading-none">
+                                      {flight?.departure_local_time}
+                                    </p>
+                                    <p className=" text-[#7B8190]">
+                                      ({flight?.departure_airport})
+                                    </p>
+                                    <p className="text-[#7B8190]">
+                                      {flight?.departure_city || ""}
+                                    </p>
+                                  </div>
+
+                                  <div className="text-center text-[18px] mt-1">
+                                    <IonIcon icon={arrowForward} />
+                                  </div>
+
+                                  <div className="text-center">
+                                    <p className="font-semibold text-[18px] ">
+                                      {flight?.arrival_local_time}
+                                    </p>
+
+                                    <p className=" text-[#7B8190]">
+                                      ({flight?.arrival_airport})
+                                    </p>
+
+                                    <p className=" text-[#7B8190]">
+                                      {flight?.arrival_city || ""}
+                                    </p>
+                                  </div>
+                                </div>
+
+                                <div className="text-[12px] text-[#B6BBC6]">
+                                  <p>{flight?.duration_formated}/в пути</p>
+
+                                  <p>
+                                    {segment?.flights_info?.length - 1}{" "}
+                                    пересадок
+                                  </p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="">
+                            <p className="text-[#00AAFF]">Обратно</p>
+
+                            {obratno?.flights_info.map((flight, index) => (
+                              <div
+                                key={index}
+                                className="grid grid-cols-2 gap-5 mt-3"
+                              >
+                                <div className="flex gap-5 items-center justify-center">
+                                  <IonImg
+                                    src={group?.carrier_logo}
+                                    className="w-8 h-8 object-contain mt-1"
+                                  />
+                                  <div>
+                                    <p className="font-semibold">
+                                      {flight?.departure_local_time} –{" "}
+                                      {flight?.arrival_local_time}
+                                    </p>
+                                    <div className="flex gap-3 items-center">
+                                      <div>
+                                        <p>({flight?.departure_airport})</p>
+                                        <p className=" text-[#7B8190]">
+                                          {flight?.departure_city || ""}
+                                        </p>
+                                      </div>
+                                      {/* <IonIcon icon={arrowForward} /> */}
+                                      <div>
+                                        <p>({flight?.arrival_airport})</p>
+                                        <p className=" text-[#7B8190]">
+                                          {flight?.arrival_city || ""}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="text-[12px] text-[#B6BBC6]">
+                                  <p>{flight?.duration_formated}/в пути</p>
+
+                                  {/* <p>{segment?.flights_info?.length - 1} пересадок</p> */}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
+                  ) : (
+                    <div className="">
+                      {segment?.flights_info.map((flight, index) => (
+                        <div
+                          key={index}
+                          className="grid grid-cols-2 gap-5 mt-3"
+                        >
+                          <div className="flex gap-5 items-center justify-center">
+                            <IonImg
+                              src={group?.carrier_logo}
+                              className="w-8 h-8 object-contain mt-1"
+                            />
+                            <div>
+                              <p className="font-semibold">
+                                {flight?.departure_local_time} –{" "}
+                                {flight?.arrival_local_time}
+                              </p>
+                              <div className="flex gap-3 items-center">
+                                <div>
+                                  <p>({flight?.departure_airport})</p>
+                                  <p className=" text-[#7B8190]">
+                                    {flight?.departure_city || ""}
+                                  </p>
+                                </div>
+                                {/* <IonIcon icon={arrowForward} /> */}
+                                <div>
+                                  <p>({flight?.arrival_airport})</p>
+                                  <p className=" text-[#7B8190]">
+                                    {flight?.arrival_city || ""}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="text-[12px] text-[#B6BBC6]">
+                            <p>{flight?.duration_formated}/в пути</p>
 
-                    <div className="text-sm text-gray-400">
-                      {segment.duration_formated} в пути / прямой
+                            {/* <p>{segment?.flights_info?.length - 1} пересадок</p> */}
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  </div>
+                  )}
+                  {/* </div> */}
                 </IonCardContent>
               </IonCard>
             );
           }),
         )}
-
-        {/* <IonCard>
-          <IonCardHeader>
-            <IonCardTitle>
-              <IonSegment className="flex-1 gap-4 bg-white">
-                <IonSegmentButton
-                  value="default"
-                  style={{ backgroundColor: "#845FD9", color: "white" }}
-                >
-                  <IonLabel>Самый оптимальный</IonLabel>
-                </IonSegmentButton>
-                <IonSegmentButton
-                  value="segment"
-                  style={{ backgroundColor: "#216DC4", color: "white" }}
-                >
-                  <IonLabel>Самый быстрый</IonLabel>
-                </IonSegmentButton>
-              </IonSegment>
-            </IonCardTitle>
-          </IonCardHeader>
-
-          <IonCardContent>
-            <h1>23 000</h1>
-            <IonSegment className="flex-1 gap-4 bg-white ">
-              <IonSegmentButton
-                value="default"
-                style={{ backgroundColor: "#F0F0F5", color: "white" }}
-              >
-                <IonLabel className="text-black">С багажом 1×23кг</IonLabel>
-              </IonSegmentButton>
-              <IonSegmentButton
-                value="segment"
-                style={{ backgroundColor: "#F0F0F5", color: "white" }}
-              >
-                <IonLabel className="text-black">
-                  С ручной кладью 1×8кг
-                </IonLabel>
-              </IonSegmentButton>
-            </IonSegment>
-            <div className="flex justify-between py-5 items-start">
-              <IonImg src={logoPlane} className="w-10 h-10 object-contain" />
-              <div className="">
-                <p className="text-black font-semibold">09:05 - 09:45</p>
-                <div className="flex items-center justify-center">
-                  <p>BSZ</p>
-                  <IonIcon icon={arrowForward} />
-                  <p>OSS</p>
-                </div>
-              </div>
-              <div className="text-black font-semibold text-sm">
-                32ч в пути / прямой
-              </div>
-            </div>
-          </IonCardContent>
-        </IonCard>
-        <IonCard>
-          <IonCardHeader>
-            <IonCardTitle>
-              <IonSegment className="flex-1 gap-4 bg-white">
-                <IonSegmentButton
-                  value="default"
-                  style={{ backgroundColor: "#845FD9", color: "white" }}
-                >
-                  <IonLabel>Самый оптимальный</IonLabel>
-                </IonSegmentButton>
-                <IonSegmentButton
-                  value="segment"
-                  style={{ backgroundColor: "#216DC4", color: "white" }}
-                >
-                  <IonLabel>Самый быстрый</IonLabel>
-                </IonSegmentButton>
-              </IonSegment>
-            </IonCardTitle>
-          </IonCardHeader>
-
-          <IonCardContent>
-            <h1>23 000</h1>
-            <IonSegment className="flex-1 gap-4 bg-white ">
-              <IonSegmentButton
-                value="default"
-                style={{ backgroundColor: "#F0F0F5", color: "white" }}
-              >
-                <IonLabel className="text-black">С багажом 1×23кг</IonLabel>
-              </IonSegmentButton>
-              <IonSegmentButton
-                value="segment"
-                style={{ backgroundColor: "#F0F0F5", color: "white" }}
-              >
-                <IonLabel className="text-black">
-                  С ручной кладью 1×8кг
-                </IonLabel>
-              </IonSegmentButton>
-            </IonSegment>
-            <div className="flex justify-between py-5 items-start">
-              <IonImg src={logoPlane} className="w-10 h-10 object-contain" />
-              <div className="">
-                <p className="text-black font-semibold">09:05 - 09:45</p>
-                <div className="flex">
-                  <p>BSZ</p>
-                  <IonIcon icon={arrowForward} />
-                  <p>OSS</p>
-                </div>
-              </div>
-              <div className="text-black font-semibold text-sm">
-                32ч в пути / прямой
-              </div>
-            </div>
-          </IonCardContent>
-        </IonCard> */}
       </IonContent>
 
       {bronTicket && (
