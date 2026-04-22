@@ -15,7 +15,7 @@ import {
   settingsOutline,
   cardOutline,
   close,
-  documentTextOutline,
+
 } from "ionicons/icons";
 import { Button } from "@mantine/core";
 import { DateInput } from "@mantine/dates";

@@ -2,15 +2,11 @@ import { useState } from "react";
 import plane from "./main-img/Vector (1).svg";
 import planeTo from "./main-img/Vector (5).svg";
 import {
-  IonButton,
   IonFab,
   IonFabButton,
   IonIcon,
-  IonImg,
   IonItem,
   IonLabel,
-  IonTabBar,
-  IonTabButton,
   useIonRouter,
 } from "@ionic/react";
 import {
@@ -18,20 +14,19 @@ import {
   arrowUp,
   calendar,
   person,
-  search,
-  ticketOutline,
 } from "ionicons/icons";
 import Calendar from "../../shared/Calendar";
 import ModalDropFrom from "../../shared/ModalDropFrom";
 import ModalDropTo from "../../shared/ModalDropTo";
 import PassangerModal from "../../shared/PassangerModal";
-import Banner from "../banner/Banner";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getPopularDestination } from "../../constants/getPopularDestination";
 import { usePassengerStore } from "../../store/usePassengerStore";
 import { useDateStore } from "../../store/useDateStore";
 import { useFromCountry } from "../../store/useFromCounty";
 import { postSearchTickets } from "../../constants/postSerchTickets";
+import CustomToolbar from "../customToolbar/CustomToolbar";
+import Banner from "../banner/Banner";
 const Main = () => {
   const [isOpenFrom, setIsOpenFrom] = useState(false);
   const [isOpenTo, setIsOpenTo] = useState(false);
@@ -103,6 +98,7 @@ const Main = () => {
 
   return (
     <div>
+      {/* <CustomToolbar /> */}
       <Banner from={from?.city} to={to?.city} />
       <div className=" w-[90%] left-1/2 transform -translate-x-1/2  absolute -mt-14 z-50 flex flex-col gap-2 ">
         <div className="relative">
@@ -118,8 +114,8 @@ const Main = () => {
               value={from ? `${from.city}, ${from.country}` : ""}
             />
           </div>
-          <IonFab className="absolute bottom-5 right-3 ">
-            <IonFabButton size="small" className="">
+          <IonFab className="absolute bottom-5 right-3   ">
+            <IonFabButton size="small" className="bg-white ">
               <IonIcon
                 size="small"
                 className="-m-4 text-gray-600 font-bold"
@@ -140,7 +136,7 @@ const Main = () => {
             <input
               type="text"
               placeholder="Куда"
-              className="w-full pl-12 py-3 focus:border-blue-500 outline-none rounded-b-2xl"
+              className="pr-[70px] pl-12 w-full py-3 focus:border-blue-500 outline-none rounded-b-2xl"
               readOnly
               value={to ? `${to.city}, ${to.country}` : ""}
             />

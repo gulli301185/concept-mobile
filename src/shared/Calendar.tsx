@@ -23,17 +23,19 @@ const Calendar = ({ isOpenCalendar, setIsOpenCalendar }) => {
       breakpoints={[0, 0.8, 1]}
       className="rounded-t-3xl"
     >
-      <div className="w-[90%] m-auto pb-5">
-        <div className="flex justify-end gap-20 items-center mb-6">
-          <p className="p-3 font-bold ">Выберите даты</p>
-          <div
-            onClick={() => setIsOpenCalendar(false)}
-            className="bg-slate-200 w-6 h-6 flex justify-center items-center  rounded-full"
-          >
-            <IonImg src={close} />
+      <div className="w-[90%] m-auto">
+        <div className="flex justify-end">
+          <div className="flex justify-between w-[80%] items-center  ">
+            <p className=" font-bold text-xl">Выберите даты</p>
+            <button
+              onClick={() => setIsOpenCalendar(false)}
+              className="bg-slate-200 w-8 h-8 flex justify-center items-center  rounded-full"
+            >
+              <IonImg src={close} className="w-3 h-3" />
+            </button>
           </div>
         </div>
-        <div
+        {/* <div
           className="relative flex gap-1 text-[#787878]"
           onClick={() => setIsOpenCalendar(!isOpenCalendar)}
         >
@@ -41,19 +43,19 @@ const Calendar = ({ isOpenCalendar, setIsOpenCalendar }) => {
             <input
               type="text"
               placeholder="Tуда"
-              className="w-full pl-3 py-3 bg-[#F0F0F5] outline-none rounded-xl"
+              className="w-full pl-3 py-2 bg-[#F0F0F5] outline-none rounded-xl"
             />
           </div>
           <div>
             <input
               type="text"
               placeholder="Обратно"
-              className="w-full pl-3  py-3 focus:border-blue-500 outline-none rounded-xl bg-[#F0F0F5]"
+              className="w-full pl-3  py-2 focus:border-blue-500 outline-none rounded-xl bg-[#F0F0F5]"
             />
           </div>
-        </div>
+        </div> */}
       </div>
-      <div className="overflow-y-auto max-h-[60vh]">
+      <div className="overflow-y-auto max-h-[70%]">
         <DayPicker
           className={"rdp-vertical"}
           disabled={{ before: new Date() }}
@@ -91,7 +93,7 @@ const Calendar = ({ isOpenCalendar, setIsOpenCalendar }) => {
         />
       </div>
       <IonFooter className="p-5">
-        <IonToolbar >
+        <IonToolbar>
           <button
             className="bg-[#06A7F2] py-3  text-white rounded-2xl  w-full "
             onClick={() => setIsOpenCalendar(false)}

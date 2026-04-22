@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 ion-fab-button::part(native) {
   background-color: transparent;
   border-radius: 15px;
@@ -62,3 +64,32 @@ ion-tab-button.tab-selected ion-label {
   background-color: #f0f0f5;
   font-weight: bold;
 }
+
+
+
+/* __________________________________ */
+ion-tab-bar.app-tabbar {
+  --border: 0;
+  --background: #fff;
+  box-shadow: none !important;
+  padding-bottom: env(safe-area-inset-bottom);
+  height: calc(60px + env(safe-area-inset-bottom));
+}
+
+ion-tab-bar.app-tabbar ion-tab-button {
+  --color: #adadad;
+  --color-selected: #06a7f2;
+  min-height: 60px;
+  font-size: 12px;
+}
+
+ion-tab-bar.app-tabbar ion-icon {
+  font-size: 20px;
+}
+
+ion-tab-bar.app-tabbar ion-label {
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+

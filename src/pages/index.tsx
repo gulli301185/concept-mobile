@@ -50,6 +50,7 @@ const AppPage = () => {
       <IonTabBar
         slot="bottom"
         style={{ "--background": "white" }}
+          className="app-tabbar"
       >
         <IonTabButton tab="search" href="/app/home" className=" text-gray-400 ">
           <IonIcon aria-hidden="true" icon={search} />
